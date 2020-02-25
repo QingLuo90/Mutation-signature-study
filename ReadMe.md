@@ -1,6 +1,7 @@
-## This github repository contains all code that is necessary to reproduce the results:
+## This github repository contains all code that is necessary to reproduce the results for our hepatology 2019 paper:
 
-## "The Mutational Features of Aristolochic Acid–Induced Mouse and Human Liver Cancers", Hepatology, 2019. 
+
+### "The Mutational Features of Aristolochic Acid–Induced Mouse and Human Liver Cancers", Hepatology, 2019. 
 (https://doi.org/10.1002/hep.30863)
 
 
