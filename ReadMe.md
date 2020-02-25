@@ -12,3 +12,11 @@ Here includes the major codes for our paper
 
 
 <img src="fig2.png" width="600" height="400" />
+
+
+
+
+
+### Data availability
+The mouse WES data used in the manuscript can be downloaded from the database of NCBI under accession number: PRJNA
+1069 507339.Processed data can be provided upron request.
