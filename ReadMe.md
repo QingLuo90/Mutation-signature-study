@@ -18,9 +18,9 @@ Here includes the major codes for our paper
 
 
 ### Data availability
-The mouse WES, low-depth WGS and RNS-seq data used in the manuscript can be downloaded from the database of NCBI under accession number: PRJNA
-1069 507339.Processed data can be provided upron request.
+The mouse WES, low-depth WGS and RNS-seq data used in the manuscript can be downloaded from the database of NCBI under accession number: PRJNA1069 507339.Processed data can be provided upron request.
 
+The munascript also contains analyses on the following open human liver cancer WES/WGS data:
 
 | Data Source Regions	| Number of patients | Cancer type | Data source |
 | ------------- | ------------- |------------- |------------- |
