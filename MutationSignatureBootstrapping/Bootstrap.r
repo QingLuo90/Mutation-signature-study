@@ -55,7 +55,6 @@ bootstrapSigExposures <- function(m, P, R) {
 
 
 
-------------------------------------------------------------------------------------------------------------------------------------------------
 setwd("C:\\Users\\think\\Desktop\\Mouse_otherCancer")
 
 library(MutationalPatterns)
@@ -81,7 +80,7 @@ mut_mat <- mut_matrix(vcf_list = vcfs, ref_genome = ref_genome)
 
 load("D:\\0530\\SignatureEstimation\\SignatureEstimation\\data\\signaturesCOSMIC.rda")
 
-#将mut_mat 与 cosmic signature的行名排列一致
+	      
 mut_mat <- cbind(mut_mat,rownames(mut_mat))
 mut_mat <- mut_mat[order(mut_mat[,ncol(mut_mat)],decreasing=F),];
 signaturesCOSMIC <- cbind(signaturesCOSMIC,rownames(signaturesCOSMIC))
@@ -128,7 +127,6 @@ rownames(erro_matrix) <- colnames(mut_mat)
 rownames(exposure_boot) <- colnames(mut_mat)
 
 
-#把百分之九十五的置信区间，bootstrap的抽样平均误差，突变数量输出为到一个表格
 
 exposure_confidence_interval <-cbind(exposure_confidence_interval,rowMeans(erro_matrix))
 
@@ -142,7 +140,6 @@ write.table(exposure_confidence_interval,"exposure_confidence_interval.txt",row.
 
 write.table(erro_matrix,"erro_matrix.txt",row.names = T,quote=F,sep="\t")
 
-#用size 和 mean erro作图，可以看出来，size小的情况下，mean erro会比较高。
 plot(exposure_confidence_interval[,4],exposure_confidence_interval[,3],xlab="MutationCounts",ylab="MeanErro",cex=1,pch=16,col="black")
 
 library(ggplot2)
@@ -151,16 +148,13 @@ exposure_confidence_interval <- as.data.frame(exposure_confidence_interval)
 g <- ggplot(exposure_confidence_interval)
 g+geom_point(aes(size,meanErro),pch=16,alpha=0.5,cex=3)
 
-#输出1000次bootstrap抽样的exposure 和 erro结果
 write.table(exposure_boot,"exposure_boot.txt",row.names = T,quote=F,sep="\t")
 write.table(erro_matrix,"erro_matrix.txt",row.names = T,quote=F,sep="\t")
 
 
-#对前是个样本各自的1000个erros,分别做bar plot
 e <- t(erro_matrix)
 boxplot(e[,1:10], horizontal=T,col="orange",cex=0.1,pch=16)
 
-#对所有样本的平均erro做bar plot
 x <- rowMeans(erro_matrix)
 boxplot(x, horizontal=T,col="orange",cex=0.1,pch=16)
 
