@@ -74,7 +74,6 @@ for (i in c(1:nrow(new_rt))){
 
 }
 
-#aes_string,相比aes是可以将变量转化为数字存入p。
 
 x <- chrom_length[-21]
 x <- c(1,x)
