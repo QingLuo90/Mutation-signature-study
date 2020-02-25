@@ -8,4 +8,4 @@ Here includes the major codes for our paper
 
 
 
-![Image description](./fig1.png | width=48,height=24)
+![Image description](./fig1.png ){:height="24px" width="48px"}
