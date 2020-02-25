@@ -16,6 +16,15 @@ Here includes the major codes for our paper
 
 
 
+### Content
+./GenomeExome-seq_Mutation: scripts for processing mouse liver cancer WES data and call somatic mutations;
+
+./Sciclone: scritps for performing tumor clonal analyses based on VAF and CNV;
+
+./MutationSignatureBootstrapping: 
+scripts for deconvoluting mutational signature with bootstrapping resmapling method; tumor mutation siganture content simulation; plotting mutation signature.
+
+
 
 ### Data availability
 The mouse WES, low-depth WGS and RNS-seq data used in the manuscript can be downloaded from the database of NCBI under accession number: PRJNA1069 507339. Processed data can be provided upron request.
@@ -36,14 +45,5 @@ The munascript also contains analyses on the following open human liver cancer W
 | Korea |	231	| HCC | Ahn SM, et al, Hepatology 2014;60:1972-1982. |
 | China (mainland)	| 103 | ICC |	Zou S, et al, Nat Commun 2014;5:5696. |
 |Asia|	121	| cHCC-ICC | Xue R, et al, Cancer Cell 2019;35:932-947. |
-
-
-### Content
-./GenomeExome-seq_Mutation: scripts for processing mouse liver cancer WES data and call somatic mutations;
-
-./Sciclone: scritps for performing tumor clonal analyses based on VAF and CNV;
-
-./MutationSignatureBootstrapping: 
-scripts for deconvoluting mutational signature with bootstrapping resmapling method; tumor mutation siganture content simulation; plotting mutation signature.
 
 
