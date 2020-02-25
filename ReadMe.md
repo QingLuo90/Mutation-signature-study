@@ -8,7 +8,7 @@ Here includes the major codes for our paper
 
 
 
-<img src="fig1.png" width="600" height="600" />
+<img src="fig1.png" width="600" height="400" />
 
 
-<img src="fig2.png" width="600" height="600" />
+<img src="fig2.png" width="600" height="400" />
