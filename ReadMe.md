@@ -11,4 +11,4 @@ Here includes the major codes for our paper
 ![Image description](./fig1.png )
 
 
-<img src="fig1.png" width="20" />
+<img src="fig1.png" width="500" height="500" />
