@@ -37,10 +37,13 @@ The munascript also contains analyses on the following open human liver cancer W
 | China (mainland)	| 103 | ICC |	Zou S, et al, Nat Commun 2014;5:5696. |
 |Asia|	121	| cHCC-ICC | Xue R, et al, Cancer Cell 2019;35:932-947. |
 
+
+### Content
 ./GenomeExome-seq_Mutation: scripts for processing mouse liver cancer WES data and call somatic mutations;
+
 ./Sciclone: scritps for performing tumor clonal analyses based on VAF and CNV;
-./MutationSignatureBootstrapping: scripts for deconvoluting mutational signature with bootstrapping resmapling method; 
-                                  scrpits for tumor mutation siganture content simulation and method testing;
-                                  scrpits for plotting mutation signature.
+
+./MutationSignatureBootstrapping: 
+scripts for deconvoluting mutational signature with bootstrapping resmapling method; tumor mutation siganture content simulation; plotting mutation signature.
 
 
