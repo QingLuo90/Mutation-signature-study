@@ -23,6 +23,7 @@
 ./MutationSignatureBootstrapping: 
 scripts for deconvoluting mutational signature with bootstrapping resmapling method; tumor mutation siganture content simulation; plotting mutation signature.
 
+./CNV:scripts for shallow-depth WGS based CNV analysis
 
 
 ### Data availability
