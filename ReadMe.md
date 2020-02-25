@@ -23,7 +23,7 @@ The mouse WES, low-depth WGS and RNS-seq data used in the manuscript can be down
 
 
 | Data Source Regions	| Number of patients | Cancer type | Data source |
-| ------------- | ------------- |------------- |
+| ------------- | ------------- |------------- |------------- |
 | China (mainland)   | 313  | HCC | ICGC |
 | China (Hong Kong)| 	88 | HCC |	Kan Z, et al, Genome Res 2013;23:1422-1433. |
 | China (mainland) | 	116 | HCC |	Lin DC, et al, Cancer Res 2017;77:2255-2265. |
