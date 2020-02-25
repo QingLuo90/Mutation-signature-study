@@ -1,4 +1,4 @@
-setwd("E:\\Simon\\ÎÄÏ×\\Signature\\AAI_mouse_VCF\\MouseTumors")
+setwd("E:\\Simon\\Signature\\AAI_mouse_VCF\\MouseTumors")
 
 
 library(MutationalPatterns)
@@ -20,7 +20,7 @@ mut_mat <- mut_matrix(vcf_list = vcfs, ref_genome = ref_genome)
 colnames(mut_mat) <- c("M1_T1","M1_T2","M1_T3","M10_T1","M11_T1","M2_T1","M2_T2","M2_T3","M2_T4","M3_T1","M9_T1")
 
 load("D:\\0530\\SignatureEstimation\\SignatureEstimation\\data\\signaturesCOSMIC.rda")
-#½«mut_mat Óë cosmic signatureµÄĞĞÃûÅÅÁĞÒ»ÖÂ
+#å°†mut_mat ä¸ cosmic signatureçš„è¡Œåæ’åˆ—ä¸€è‡´
 mut_mat <- cbind(mut_mat,rownames(mut_mat))
 mut_mat <- mut_mat[order(mut_mat[,ncol(mut_mat)],decreasing=F),];
 signaturesCOSMIC <- cbind(signaturesCOSMIC,rownames(signaturesCOSMIC))
@@ -77,7 +77,7 @@ mut_mat_s <- mut_matrix_stranded(vcfs, ref_genome, genes_mm10)
 strand_counts <- strand_occurrences(mut_mat_s, by=sample_names)
 strand_bias <- strand_bias_test(strand_counts)
 
-#Êä³ö£¬¹ıÂËÖ»Ê£ÏÂT>A£¬ÃüÃûÎªstrand_bias_TA.txt£¬ÔÙ¶ÁÈ¡
+#è¾“å‡ºï¼Œè¿‡æ»¤åªå‰©ä¸‹T>Aï¼Œå‘½åä¸ºstrand_bias_TA.txtï¼Œå†è¯»å–
 bias <- read.table("strand_bias_TA.txt",header=T)
 count <- bias[,3]+bias[,4]
 strand <- bias[,3:4]
@@ -125,7 +125,7 @@ sig_cols = mycol
 library(ggplot2)
 library(reshape2)
 
-#reshape2 µÄmeltº¯Êı£¬°Ñmatrx»»³ÉÊÊÓÃÓÚggplotµÄdataframe£¬·Ç³£Ç¿´ó
+
 
   ordering <- order(colSums(t(mutSign_nums)),decreasing=T)
   mutSign_nums <- t(mutSign_nums)
@@ -149,35 +149,20 @@ axis.text = element_text(size = 10*scale, family = "mono")
 
 
 p = ggplot(df2,aes(x=factor(Sample),y=Activity,fill=Signature))
-
-#stack plot  
 p = p+geom_bar(stat="identity",position='stack')
-  
-#ÉÏÉ«
 p = p + scale_fill_manual(values=sig_cols)
-  
-
-#È¥³ıÍø¸ñÏß
 p=p+theme_classic() 
 
 
-#x¡¢yÖá¿Ì¶È£¬xÖáangle 90¶È¼´Ñù±¾ÎªÊúÖ±ÊéĞ´
 p = p + theme(axis.text.x = element_text(angle=90,vjust=0.5,size=6*scale,face="bold",colour="black"))
-
-# p=p+scale_y_continuous(limits=c(0, 1800), breaks=c(500,1000,1500,1800))
-
 p = p + theme(axis.text.y = element_text(size=10*scale,face="bold",colour="black"))
 
-#x¡¢yÖálable 
+
 p = p + xlab("Samples") + ylab("Mutational Signature Content")
 p = p + theme(axis.title.y = element_text(face="bold",colour="black",size=10*scale))  
 p = p + theme(axis.title.x = element_text(face="bold",colour="black",size=10*scale))
  
 
-
-
-
-#Ìí¼Ótitle£¬Éè¶¨×ÖÌå£¬´óĞ¡
 p = p + ggtitle("Mutational Signature Exposures")
 p = p + theme(plot.title=element_text(lineheight=1.0,face="bold",size=10*scale))
 
