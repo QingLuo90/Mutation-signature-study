@@ -8,4 +8,4 @@ Here includes the major codes for our paper
 
 
 
-![Image description](./fig1.png=24x48))
+![Image description](./fig1.png =24x48)
