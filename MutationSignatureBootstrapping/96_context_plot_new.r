@@ -1,6 +1,9 @@
- mut_mat <- mut_matrix(vcf_list = vcfs, ref_genome = ref_genome)
-#²»Òª¸ÄË³Ðò
+#change to working direcgtory
+#setwd("")
 
+library(ggplot2)
+
+mut_mat <- mut_matrix(vcf_list = vcfs, ref_genome = ref_genome)
 
 j=1
 for (j in c(1:ncol(mut_mat))){
