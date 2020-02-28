@@ -20,7 +20,6 @@ mut_mat <- mut_matrix(vcf_list = vcfs, ref_genome = ref_genome)
 colnames(mut_mat) <- c("M1_T1","M1_T2","M1_T3","M10_T1","M11_T1","M2_T1","M2_T2","M2_T3","M2_T4","M3_T1","M9_T1")
 
 load("D:\\0530\\SignatureEstimation\\SignatureEstimation\\data\\signaturesCOSMIC.rda")
-#将mut_mat 与 cosmic signature的行名排列一致
 mut_mat <- cbind(mut_mat,rownames(mut_mat))
 mut_mat <- mut_mat[order(mut_mat[,ncol(mut_mat)],decreasing=F),];
 signaturesCOSMIC <- cbind(signaturesCOSMIC,rownames(signaturesCOSMIC))
@@ -51,7 +50,7 @@ mycol <- c("darkgreen","deepskyblue4","goldenrod1","darkred","orangered1","deepp
 
 
 
-# cosine similarity and plot
+# cosine similarity analysis and plot
 cos_sim_samples_signatures = cos_sim_matrix(mut_mat, as.matrix(signaturesCOSMIC[,22])) 
 colnames(cos_sim_samples_signatures) <- "signature 22"
 
@@ -77,7 +76,7 @@ mut_mat_s <- mut_matrix_stranded(vcfs, ref_genome, genes_mm10)
 strand_counts <- strand_occurrences(mut_mat_s, by=sample_names)
 strand_bias <- strand_bias_test(strand_counts)
 
-#输出，过滤只剩下T>A，命名为strand_bias_TA.txt，再读取
+
 bias <- read.table("strand_bias_TA.txt",header=T)
 count <- bias[,3]+bias[,4]
 strand <- bias[,3:4]
@@ -99,10 +98,8 @@ for (j in c(1:nrow(bias))){
 	dev.off()
 	j = j+1
 }
-------------------------------------------------------------------------------------------------------------------------------------------------
 
-#plot the signature contriution
-
+##plot the signature contriution
 #calculate the contribution_counts and contribution_proportions 
 fit_res <- fit_to_signatures(mut_mat,liver_signatures)
 contribution_counts <- fit_res$contribution
