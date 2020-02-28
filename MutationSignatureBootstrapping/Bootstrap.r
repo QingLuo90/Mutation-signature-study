@@ -1,25 +1,44 @@
-##Functions
+###The scrit is to use bootstrappng method for 
 
-fitsignatures = function(mut, signatures)
-{
-	lsq_contribution = matrix(NA, nrow=nrow(signatures), ncol=1)
-	lsq = lsqnonneg(signatures, mut)
-      lsq_contribution = lsq$x
-   
-    	exposures = lsq_contribution/sum(lsq_contribution)
-      return(exposures)
-}
+setwd("C:\\Users\\think\\Desktop\\Mouse_otherCancer")
 
-FrobeniusNorm <- function(M, P, E) {
-  sqrt(sum((M-P%*%E)^2))
-}
+library(pracma)
+library(MutationalPatterns)
+library("BSgenome.Mmusculus.UCSC.mm10", character.only = TRUE)
+ref_genome <- "BSgenome.Mmusculus.UCSC.mm10"
 
-is.wholenumber <- function(x, tol = .Machine$double.eps) {
-  abs(x - round(x)) < tol
-}
+#load data
+vcf_files = list.files( pattern = ".vcf", full.names = TRUE)
+sample_names= list.files( pattern = ".vcf", full.names = F)
 
+vcfs = read_vcfs_as_granges(vcf_files, sample_names, genome = ref_genome)
+auto = extractSeqlevelsByGroup(species="Mus_musculus", 
+                               style="UCSC",      group="all")
+auto <- auto[1:21]
+vcfs = lapply(vcfs, function(x) keepSeqlevels(x, auto))
 
 
+
+#get 96 matrix
+mut_mat <- mut_matrix(vcf_list = vcfs, ref_genome = ref_genome)
+#load the reference cosmic signatures
+load("D:\\0530\\SignatureEstimation\\SignatureEstimation\\data\\signaturesCOSMIC.rda")
+
+#make the 96 matrix ready for analysis
+mut_mat <- cbind(mut_mat,rownames(mut_mat))
+mut_mat <- mut_mat[order(mut_mat[,ncol(mut_mat)],decreasing=F),];
+signaturesCOSMIC <- cbind(signaturesCOSMIC,rownames(signaturesCOSMIC))
+signaturesCOSMIC <- signaturesCOSMIC [order(signaturesCOSMIC [,ncol(signaturesCOSMIC )],decreasing=F),];
+mut_mat <- mut_mat[,-ncol(mut_mat)]
+signaturesCOSMIC <- signaturesCOSMIC[,-ncol(signaturesCOSMIC)]
+mut_mat <- matrix(as.numeric(mut_mat ),nrow=nrow(mut_mat ), dimnames=dimnames(mut_mat ))
+signaturesCOSMIC<- matrix(as.numeric(signaturesCOSMIC),nrow=nrow(signaturesCOSMIC), dimnames=dimnames(signaturesCOSMIC))
+
+#define signatures of liver cancers
+sigsLiver = c(1,4,5,6,12,16,17,22,23,24)
+P = signaturesCOSMIC[, sigsLiver]
+
+#####define function for bootstrapping###################
 bootstrapSigExposures <- function(m, P, R) {
   ## process and check function parameters
   ## m, P
@@ -52,59 +71,16 @@ bootstrapSigExposures <- function(m, P, R) {
 
   return(list(exposures=exposures, errors=errors))
 }
+###########################################################################		 
+		 
 
-
-
-setwd("C:\\Users\\think\\Desktop\\Mouse_otherCancer")
-
-library(MutationalPatterns)
-library("BSgenome.Mmusculus.UCSC.mm10", character.only = TRUE)
-ref_genome <- "BSgenome.Mmusculus.UCSC.mm10"
-
-#load data
-vcf_files = list.files( pattern = ".vcf", full.names = TRUE)
-sample_names= list.files( pattern = ".vcf", full.names = F)
-
-vcfs = read_vcfs_as_granges(vcf_files, sample_names, genome = ref_genome)
-auto = extractSeqlevelsByGroup(species="Mus_musculus", 
-                               style="UCSC",
-                               group="all")
-auto <- auto[1:21]
-vcfs = lapply(vcfs, function(x) keepSeqlevels(x, auto))
-
-
-
-#get 96 matrix
-mut_mat <- mut_matrix(vcf_list = vcfs, ref_genome = ref_genome)
-
-
-load("D:\\0530\\SignatureEstimation\\SignatureEstimation\\data\\signaturesCOSMIC.rda")
-
-	      
-mut_mat <- cbind(mut_mat,rownames(mut_mat))
-mut_mat <- mut_mat[order(mut_mat[,ncol(mut_mat)],decreasing=F),];
-signaturesCOSMIC <- cbind(signaturesCOSMIC,rownames(signaturesCOSMIC))
-signaturesCOSMIC <- signaturesCOSMIC [order(signaturesCOSMIC [,ncol(signaturesCOSMIC )],decreasing=F),];
-mut_mat <- mut_mat[,-ncol(mut_mat)]
-signaturesCOSMIC <- signaturesCOSMIC[,-ncol(signaturesCOSMIC)]
-
-mut_mat <- matrix(as.numeric(mut_mat ),nrow=nrow(mut_mat ), dimnames=dimnames(mut_mat ))
-
-signaturesCOSMIC<- matrix(as.numeric(signaturesCOSMIC),nrow=nrow(signaturesCOSMIC), dimnames=dimnames(signaturesCOSMIC))
-
-
-sigsLiver = c(1,4,5,6,12,16,17,22,23,24)
-P = signaturesCOSMIC[, sigsLiver]
-
-
-
+#set empty output matrices
 exposure_confidence_interval <- matrix(nrow = ncol(mut_mat),ncol=2)
 exposure_boot   <- matrix(nrow = ncol(mut_mat),ncol=1000)
 erro_matrix <- matrix(nrow = ncol(mut_mat),ncol=1000)
 
 
-library(pracma)
-
+#calculate bootstrap result for each sample
 i=1
 for (i in c(1:ncol(mut_mat))) {
     print(i)
@@ -127,7 +103,7 @@ rownames(erro_matrix) <- colnames(mut_mat)
 rownames(exposure_boot) <- colnames(mut_mat)
 
 
-
+#get output
 exposure_confidence_interval <-cbind(exposure_confidence_interval,rowMeans(erro_matrix))
 
 size <- colSums(mut_mat)
@@ -140,6 +116,8 @@ write.table(exposure_confidence_interval,"exposure_confidence_interval.txt",row.
 
 write.table(erro_matrix,"erro_matrix.txt",row.names = T,quote=F,sep="\t")
 
+
+#visualization of some results
 plot(exposure_confidence_interval[,4],exposure_confidence_interval[,3],xlab="MutationCounts",ylab="MeanErro",cex=1,pch=16,col="black")
 
 library(ggplot2)
